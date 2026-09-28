@@ -1,86 +1,80 @@
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- Theme toggle (persisted) ----------
+  // ---------- Theme (single source of truth: <html data-theme>, persisted; boot script in <head> applies it before paint) ----------
   const themeToggle = document.getElementById('themeToggle');
-  const savedTheme = localStorage.getItem('aryam-theme');
-  if (savedTheme) root.dataset.theme = savedTheme;
-
-  const updateThemeIcon = () => {
-    if (!themeToggle) return;
-    themeToggle.innerHTML = root.dataset.theme === 'dark'
-      ? '<i class="ri-sun-line"></i>'
-      : '<i class="ri-moon-line"></i>';
+  const setTheme = (t) => {
+    root.dataset.theme = t;
+    try { localStorage.setItem('aryam-theme', t); } catch (_) {}
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#082C35' : '#F7F4D5');
+    themeToggle?.setAttribute('aria-pressed', String(t === 'dark'));
   };
-  updateThemeIcon();
+  setTheme(root.dataset.theme === 'dark' ? 'dark' : 'light');
+  themeToggle?.addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
 
-  themeToggle?.addEventListener('click', () => {
-    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('aryam-theme', root.dataset.theme);
-    updateThemeIcon();
-  });
-
-  // ---------- Language toggle (systematic — every .lang-target element is
-  // translated from its data-en / data-ar attributes; nothing is hand-picked) ----------
+  // ---------- Language (one system: every .lang-target swaps from data-en / data-ar; direction follows) ----------
   const langToggle = document.getElementById('langToggle');
-
   const applyLang = (lang) => {
+    lang = lang === 'ar' ? 'ar' : 'en';
     root.lang = lang;
     root.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
     document.querySelectorAll('.lang-target').forEach(el => {
-      const value = lang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
-      if (value !== null) el.innerHTML = value;
+      const value = el.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en');
+      if (value !== null && value !== '') el.innerHTML = value;
     });
+    [['title', 'title'], ['aria', 'aria-label'], ['placeholder', 'placeholder']].forEach(([key, attr]) => {
+      document.querySelectorAll('[data-en-attr-' + key + ']').forEach(el => {
+        const v = el.getAttribute('data-' + lang + '-attr-' + key);
+        if (v) el.setAttribute(attr, v);
+      });
+    });
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute('content', desc.getAttribute('data-' + lang + '-content') || desc.content);
 
-    document.querySelectorAll('[data-en-attr-title], [data-ar-attr-title]').forEach(el => {
-      const value = lang === 'ar' ? el.getAttribute('data-ar-attr-title') : el.getAttribute('data-en-attr-title');
-      if (value) el.setAttribute('title', value);
-    });
-    document.querySelectorAll('[data-en-attr-aria], [data-ar-attr-aria]').forEach(el => {
-      const value = lang === 'ar' ? el.getAttribute('data-ar-attr-aria') : el.getAttribute('data-en-attr-aria');
-      if (value) el.setAttribute('aria-label', value);
-    });
-    document.querySelectorAll('[data-en-attr-placeholder], [data-ar-attr-placeholder]').forEach(el => {
-      const value = lang === 'ar' ? el.getAttribute('data-ar-attr-placeholder') : el.getAttribute('data-en-attr-placeholder');
-      if (value) el.setAttribute('placeholder', value);
-    });
-
-    if (langToggle) langToggle.textContent = lang === 'ar' ? 'EN' : 'عر';
-    localStorage.setItem('aryam-lang', lang);
+    if (langToggle) langToggle.textContent = lang === 'ar' ? 'English' : 'العربية';
+    try { localStorage.setItem('aryam-lang', lang); } catch (_) {}
     document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
   };
 
-  let currentLang = localStorage.getItem('aryam-lang') || 'en';
+  let currentLang = 'en';
+  try { currentLang = localStorage.getItem('aryam-lang') === 'ar' ? 'ar' : 'en'; } catch (_) {}
   applyLang(currentLang);
+  langToggle?.addEventListener('click', () => { currentLang = currentLang === 'en' ? 'ar' : 'en'; applyLang(currentLang); });
 
-  langToggle?.addEventListener('click', () => {
-    currentLang = currentLang === 'en' ? 'ar' : 'en';
-    applyLang(currentLang);
-  });
-
-  // ---------- Custom cursor ----------
+  // ---------- Cursor (fine pointers only) ----------
   const cursor = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
-  if (cursor && ring && window.matchMedia('(pointer:fine)').matches) {
+  if (cursor && ring && window.matchMedia('(pointer:fine)').matches && !reduceMotion) {
+    document.body.classList.add('has-cursor');
     document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
+      cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+      ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
     });
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
-      el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+    document.addEventListener('mouseover', e => {
+      const on = !!e.target.closest('a, button');
+      cursor.classList.toggle('hover', on); ring.classList.toggle('hover', on);
     });
   }
-  // ---------- Mobile menu (links collapse into a dropdown at <= 900px) ----------
-  const nav = document.querySelector('nav');
+
+  // ---------- Hero grid: a soft local response to the pointer ----------
+  const hero = document.getElementById('hero');
+  if (hero && window.matchMedia('(pointer:fine)').matches && !reduceMotion) {
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      hero.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      hero.classList.add('is-live');
+    });
+    hero.addEventListener('pointerleave', () => hero.classList.remove('is-live'));
+  }
+
+  // ---------- Mobile menu ----------
+  const nav = document.getElementById('siteNav');
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
-  const MENU_LABELS = {
-    en: { open: 'Open menu', close: 'Close menu' },
-    ar: { open: 'فتح القائمة', close: 'إغلاق القائمة' }
-  };
+  const MENU_LABELS = { en: { open: 'Open menu', close: 'Close menu' }, ar: { open: 'فتح القائمة', close: 'إغلاق القائمة' } };
   const setMenu = (open, returnFocus = false) => {
     if (!nav || !menuToggle) return;
     nav.classList.toggle('menu-open', open);
@@ -97,6 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
   window.matchMedia('(min-width: 901px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
   document.addEventListener('langchange', () => setMenu(menuIsOpen()));
   setMenu(false);
+
+  // ---------- Current section in the nav ----------
+  const groups = { about: 'about', capabilities: 'capabilities', work: 'work', graduation: 'work', wejhatna: 'work', idrm: 'work', certificates: 'certificates', contact: 'contact' };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const target = groups[en.target.id];
+        document.querySelectorAll('#navLinks a').forEach(a => a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + target)));
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(groups).forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); });
+  }
 
   // ---------- Contact form (Formspree — existing endpoint, set in links.js / form action) ----------
   const form = document.getElementById('contactForm');
@@ -206,3 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = false;
         submitBtn.removeAttribute('aria-busy');
       }
+    });
+  }
+});
