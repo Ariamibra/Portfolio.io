@@ -603,3 +603,272 @@ html[dir="rtl"] .about-facts dt, html[dir="rtl"] .sheet dt { font-size: .9063rem
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .g-hl { display: none; }
 }
+
+
+/* ================================================================
+   ARYAM PERSONAL IDENTITY — refined visual layer
+   Keep the cartographic atmosphere quiet: content stays dominant.
+   ================================================================ */
+:root{
+  --brand-paper:#fbf8e7;
+  --brand-ink:#173f47;
+  --brand-moss:#839958;
+  --brand-rose:#d3968c;
+  --brand-teal:#105666;
+}
+
+.hero-identity{
+  position:relative;
+  align-self:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  width:min(250px,26vw);
+  z-index:3;
+  margin-inline:auto;
+}
+.as-card{
+  position:relative;
+  width:190px;
+  aspect-ratio:2.5/3.5;
+  border:1px solid color-mix(in srgb,var(--brand-ink) 20%,transparent);
+  border-radius:18px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,255,255,.12)),
+    var(--brand-paper);
+  box-shadow:0 24px 55px rgba(16,86,102,.13),0 4px 14px rgba(16,86,102,.08);
+  transform:rotate(4deg);
+  overflow:hidden;
+}
+.as-card::before{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border:1px solid color-mix(in srgb,var(--brand-moss) 38%,transparent);
+  border-radius:13px;
+}
+.as-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(125deg,transparent 25%,rgba(255,255,255,.38) 47%,transparent 66%);
+  pointer-events:none;
+}
+.as-card-corner{
+  position:absolute;
+  top:18px;
+  inset-inline-start:19px;
+  font:600 13px/1 "DM Sans",sans-serif;
+  color:var(--brand-teal);
+}
+.as-corner-bottom{
+  top:auto;
+  bottom:18px;
+  inset-inline-start:auto;
+  inset-inline-end:19px;
+  transform:rotate(180deg);
+}
+.as-monogram{
+  position:absolute;
+  inset:50% auto auto 50%;
+  width:108px;
+  height:108px;
+  transform:translate(-50%,-50%);
+}
+.as-square{
+  position:absolute;
+  width:69px;
+  height:69px;
+  border:2px solid var(--brand-teal);
+  border-radius:13px;
+  transform:rotate(45deg);
+}
+.as-square-a{left:10px;top:11px;}
+.as-square-s{
+  left:29px;top:30px;
+  border-color:var(--brand-moss);
+}
+.as-letter{
+  position:absolute;
+  font:600 34px/.9 "DM Sans",sans-serif;
+  letter-spacing:-.08em;
+  color:var(--brand-teal);
+}
+.as-letter-a{left:25px;top:34px;}
+.as-letter-s{left:54px;top:51px;color:var(--brand-moss);}
+.hero-identity-caption{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  text-align:center;
+  color:var(--ink-2);
+  font:500 10px/1.3 "JetBrains Mono",monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.hero-identity-caption span+span{
+  font-size:8px;
+  letter-spacing:.08em;
+  opacity:.7;
+}
+.btn-paper{
+  background:transparent;
+  color:var(--ink);
+  border:1px solid var(--line-2);
+}
+.btn-paper:hover{
+  background:var(--chip);
+  border-color:var(--line-2);
+}
+
+/* Resource links */
+.project-resources{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-top:30px;
+  padding-top:17px;
+  border-top:1px solid var(--line);
+}
+.resource-kicker{
+  font:500 10px/1.2 "JetBrains Mono",monospace;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+  color:var(--ink-2);
+}
+.resource-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:600;
+  font-size:13px;
+}
+.resource-link .i{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;}
+.resource-link:hover{color:var(--moss);}
+
+/* Recommendations */
+.sec-recommendations{
+  background:color-mix(in srgb,var(--rosy) 7%,var(--beige));
+  color:var(--ink);
+  position:relative;
+  overflow:hidden;
+}
+html[data-theme="dark"] .sec-recommendations{
+  background:color-mix(in srgb,var(--rosy) 6%,var(--night));
+}
+.recommendations-layout{padding-block:clamp(76px,9vw,130px);}
+.recommendations-head{max-width:720px;}
+.recommendation-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  margin-top:38px;
+}
+.recommendation-card{
+  position:relative;
+  padding:28px;
+  border:1px solid color-mix(in srgb,var(--midnight) 13%,transparent);
+  border-radius:20px;
+  background:color-mix(in srgb,var(--beige) 72%,transparent);
+  box-shadow:0 16px 40px rgba(16,86,102,.06);
+}
+html[data-theme="dark"] .recommendation-card{
+  background:color-mix(in srgb,var(--beige) 4%,transparent);
+  border-color:var(--line);
+  box-shadow:none;
+}
+.recommendation-card-alt{background:color-mix(in srgb,var(--moss) 7%,var(--beige));}
+html[data-theme="dark"] .recommendation-card-alt{background:color-mix(in srgb,var(--moss) 7%,var(--night));}
+.recommendation-top{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  align-items:center;
+  gap:14px;
+}
+.recommender-initial{
+  width:42px;height:42px;
+  display:grid;place-items:center;
+  border-radius:12px;
+  background:var(--midnight);
+  color:var(--beige);
+  font:600 17px/1 "Cairo",sans-serif;
+}
+.recommendation-card-alt .recommender-initial{background:var(--moss);color:#fff;}
+.recommendation-top h3{margin:0;font-size:15px;line-height:1.35;}
+.recommendation-top p{margin:4px 0 0;color:var(--ink-2);font-size:12px;}
+.recommendation-top time{
+  align-self:start;
+  padding-top:4px;
+  color:var(--ink-2);
+  font:500 10px/1 "JetBrains Mono",monospace;
+  white-space:nowrap;
+}
+.recommendation-rating{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:9px;
+  margin:24px 0 18px;
+  font-size:11px;
+  color:var(--ink-2);
+}
+.rating-pill{
+  padding:5px 9px;
+  border-radius:999px;
+  background:color-mix(in srgb,var(--moss) 15%,transparent);
+  color:var(--moss-ink);
+  font-weight:600;
+}
+html[data-theme="dark"] .rating-pill{color:var(--beige);background:color-mix(in srgb,var(--moss) 25%,transparent);}
+.recommendation-card blockquote{
+  margin:0;
+  padding-inline-start:17px;
+  border-inline-start:2px solid color-mix(in srgb,var(--rosy) 70%,transparent);
+}
+.recommendation-card blockquote p{
+  margin:0;
+  color:var(--ink);
+  font-size:14px;
+  line-height:1.8;
+}
+.recommendation-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-top:24px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  color:var(--ink-2);
+  font-size:11px;
+}
+.recommendation-bottom strong{color:var(--ink);}
+
+@media (max-width:900px){
+  .hero-identity{width:auto;order:-1;margin-bottom:4px;}
+  .as-card{width:145px;}
+  .hero-inner{grid-template-columns:1fr!important;}
+  .recommendation-grid{grid-template-columns:1fr;}
+}
+@media (max-width:600px){
+  .as-card{width:128px;}
+  .hero-identity-caption{font-size:9px;}
+  .recommendation-card{padding:21px;}
+  .recommendation-top{grid-template-columns:38px 1fr;}
+  .recommendation-top time{grid-column:2;padding-top:0;}
+  .recommendation-bottom{align-items:flex-start;flex-direction:column;}
+  .project-resources{align-items:flex-start;flex-direction:column;}
+}
+
+/* Quiet the decorative atlas layer: it remains visible, but never competes with text. */
+.sec .deco{opacity:.38;}
+.sec-hero .deco{opacity:.30;}
+.sec-hero .deco-hero-contours{opacity:.20;}
+.sec-about .deco-about-contours{opacity:.16;}
+.sec-contact .deco-contact-contour{opacity:.15;}
+.sec-recommendations .deco{opacity:.12;}
