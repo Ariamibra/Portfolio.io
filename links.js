@@ -42,7 +42,7 @@ const SITE_LINKS = {
     // This is the file's GitHub URL (owner / repo / branch / path). If you ever
     // rename or move the PDF in the repo, update this one line.
     // This link appears ONLY inside the IDRM section.
-    reportUrl: "https://github.com/Ariamibra/Ariamibra.github.io/blob/main/IDRM_Reserash_Report.pdf"
+    reportUrl: "https://github.com/Ariamibra/IDRM-Original-Research/blob/main/IDRM_Research_Report.pdf"
   },
 
   // ---- Project 02 — Wejhatna (Tuwaiq Riyadh hackathon) ----
