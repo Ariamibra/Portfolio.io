@@ -24,6 +24,8 @@ const SITE_LINKS = {
   cv: null,
   linkedin: "https://linkedin.com/in/aryam-alsaidi",
   email: "ariam.gis@outlook.com",
+  // GitHub profile: the GitHub contact row stays hidden until you set this (e.g. "https://github.com/your-username").
+  github: null,
 
   // ---- Project 01 — Academic Research (Dammam Industrial Cities, 2000–2025) ----
   // This project has no external report link of its own — the original
@@ -52,6 +54,16 @@ const SITE_LINKS = {
     demoUrl: "https://wejhatna.vercel.app"
   },
 
+  // ---- Certificates (exact URLs) ----
+  certificates: {
+    esri: "https://www.esri.com/training/TrainingRecord/Certificate/Aryaibra/68396146f1f89ab68f746839/-180",
+    google: "https://www.coursera.org/account/accomplishments/specialization/AUT28Z1HYYQQ",
+    satr: "https://assets.safcsp.cloud/public/certificates/7463173c-6bb8-4951-8a23-67a463fabf04/1765196995_f1340f32-9179-4790-86a1-e618487cb7dc.png",
+    ibm: "https://www.credly.com/badges/10d82d82-a194-4daf-9b61-92ff0c63b074/linked_in_profile",
+    sdaiaPrinciples: "https://learn.samai.futurex.sa/mod/customcert/verify_certificate.php?code=AOaf66H5aE&qrcode=1",
+    sdaiaAdvanced: "https://learn.samai.futurex.sa/mod/customcert/view.php?id=567&downloadown=1"
+  },
+
   // ---- Contact form (Formspree) ----
   // Existing Formspree endpoint (no new form or account was created). It is applied
   // to the contact form's action attribute below (the same URL is also written into
@@ -78,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    if (el.hasAttribute('data-hide-if-empty')) el.removeAttribute('hidden');
     if (el.tagName === 'A') {
       const prefix = el.getAttribute('data-href-prefix') || '';
       el.setAttribute('href', prefix + value);
