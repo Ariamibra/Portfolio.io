@@ -206,6 +206,3 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = false;
         submitBtn.removeAttribute('aria-busy');
       }
-    });
-  }
-});
