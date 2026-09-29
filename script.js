@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setMenu(false);
 
   // ---------- Current section in the nav ----------
-  const groups = { about: 'about', capabilities: 'capabilities', work: 'work', graduation: 'work', wejhatna: 'work', idrm: 'work', certificates: 'certificates', contact: 'contact' };
+  const groups = { about: 'about', capabilities: 'capabilities', work: 'work', graduation: 'work', wejhatna: 'work', idrm: 'work', progression: 'work', recommendations: 'recommendations', certificates: 'certificates', contact: 'contact' };
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => {
