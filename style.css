@@ -37,8 +37,8 @@
   /* ---- tokens: paper surfaces (light) ---- */
   --p-ink:      color-mix(in srgb, var(--midnight) 92%, #000);
   --p-ink-2:    color-mix(in srgb, var(--midnight) 93%, var(--beige));
-  --p-line:     color-mix(in srgb, var(--midnight) 18%, transparent);
-  --p-line-2:   color-mix(in srgb, var(--midnight) 34%, transparent);
+  --p-line:     color-mix(in srgb, var(--midnight) 22%, transparent);
+  --p-line-2:   color-mix(in srgb, var(--midnight) 38%, transparent);
   --p-grid:     color-mix(in srgb, var(--midnight) 7%, transparent);
   --p-grid-2:   color-mix(in srgb, var(--midnight) 13%, transparent);
   --p-grid-hl:  color-mix(in srgb, var(--moss) 42%, transparent);
@@ -48,8 +48,11 @@
   --p-btn-bg:   var(--midnight);
   --p-btn-fg:   var(--beige);
   --p-btn-hover: color-mix(in srgb, var(--midnight) 78%, #000);
-  --p-chip:     color-mix(in srgb, var(--beige) 55%, transparent);
-  --p-panel:    color-mix(in srgb, var(--beige) 62%, transparent);
+  /* Chip/panel used to be beige mixed with transparent, which reads as the same flat
+     beige as the page behind it — the light theme's washed-out look. A faint midnight
+     tint gives cards, tags, and pills a visible surface without changing the palette. */
+  --p-chip:     color-mix(in srgb, var(--midnight) 7%, var(--beige));
+  --p-panel:    color-mix(in srgb, var(--midnight) 9%, var(--beige));
 
   /* ---- tokens: night surfaces (dark) ---- */
   --n-ink:      var(--beige);
@@ -622,6 +625,9 @@ html[dir="rtl"] .about-facts dt, html[dir="rtl"] .sheet dt { font-size: .9063rem
 
 .hero-inner{grid-template-columns:minmax(0,1fr) minmax(220px,28%);align-items:end;gap:clamp(36px,7vw,110px);padding-bottom:clamp(70px,9vh,120px)}
 .hero-copy{position:relative;max-width:820px}
+.hero-monogram{width:58px;height:58px;margin-bottom:18px;animation:rise .9s var(--ease) both}
+.hero-monogram .nav-monogram-back{border-width:1px}
+.hero-monogram .nav-monogram-front{inset:10px;font-size:.8rem}
 .hero-avatar{position:relative;width:118px;height:118px;margin-bottom:1.5rem}
 .hero-avatar-back,.hero-avatar-front{position:absolute;display:grid;place-items:center;border-radius:4px}
 .hero-avatar-back{width:92px;height:92px;left:0;top:0;background:var(--midnight);box-shadow:0 14px 34px color-mix(in srgb,var(--midnight) 12%,transparent)}
@@ -1014,7 +1020,11 @@ html[data-theme="dark"] .sec::before{opacity:.28}
 @media (min-width:1200px){
   :root{--nav-h:0px}
   body{padding-inline-start:var(--rail-w)}
-  html[dir="rtl"] body{padding-inline-start:0;padding-inline-end:var(--rail-w)}
+  /* No RTL override needed here: padding-inline-start is a logical property and
+     already flips to the correct physical side (right) on its own when dir=rtl.
+     A previous explicit override on this line cancelled that auto-flip and moved
+     the reserved space to the wrong (left) side, leaving a dead gap where the
+     rail used to sit in LTR and letting content run under the rail on the right. */
   .site-nav{
     inset:0 auto 0 0;width:var(--rail-w);height:100vh;
     border-bottom:0;border-inline-end:1px solid var(--line);
@@ -1048,6 +1058,9 @@ html[data-theme="dark"] .sec::before{opacity:.28}
   .sec-hero{min-height:100svh}
   .hero-inner{grid-template-columns:minmax(0,1fr);max-width:1120px;padding-inline-start:clamp(48px,8vw,120px);padding-inline-end:clamp(32px,5vw,80px)}
   .hero-copy{max-width:930px}
+  .hero-monogram{width:74px;height:74px;margin-bottom:26px}
+  .hero-monogram .nav-monogram-back{border-width:1px}
+  .hero-monogram .nav-monogram-front{inset:13px;font-size:1.05rem}
   .hero-name{font-size:clamp(5rem,9.2vw,9.3rem);line-height:.9;max-width:none;white-space:nowrap}
   .hero-name .ln{display:inline!important}
   .hero-name .ln+.ln{padding-inline-start:clamp(1rem,3vw,3.5rem)}
@@ -1058,10 +1071,10 @@ html[data-theme="dark"] .sec::before{opacity:.28}
 
 /* Monogram on smaller screens: same geometry, never a filled avatar. */
 @media (max-width:1199px){
-  .nav-monogram{position:relative;width:38px;height:34px;display:inline-block;flex:none}
+  .nav-monogram{position:relative;width:34px;height:34px;display:inline-block;flex:none}
   .nav-monogram-back,.nav-monogram-front{position:absolute;display:grid;place-items:center;background:transparent!important;border-radius:0}
-  .nav-monogram-back{left:0;top:0;width:32px;height:32px;border:1px solid var(--midnight)}
-  .nav-monogram-front{left:7px;top:5px;width:24px;height:24px;border:1px solid var(--moss);color:var(--midnight);font:600 .58rem/1 'DM Sans',sans-serif;letter-spacing:.04em}
+  .nav-monogram-back{inset:0;border:1px solid var(--midnight)}
+  .nav-monogram-front{inset:6px;border:1px solid var(--moss);color:var(--midnight);font:600 .56rem/1 'DM Sans',sans-serif;letter-spacing:.04em}
   html[data-theme="dark"] .nav-monogram-back{border-color:var(--beige)}
   html[data-theme="dark"] .nav-monogram-front{color:var(--beige)}
   .nav-identity-copy small{display:none}
@@ -1185,8 +1198,8 @@ html[lang="ar"] .recommendation-quote,html[lang="ar"] .recommendation-detail{fon
 
 /* Keep project buttons contextual rather than SaaS-like. */
 .project-actions .btn{border-radius:0;min-height:44px}
-.project-actions .btn-primary{background:var(--midnight);border-color:var(--midnight)}
-#wejhatna .project-actions .btn-primary{background:var(--d2);border-color:var(--d2)}
+.project-actions .btn-primary{background:var(--midnight);border-color:var(--midnight);color:#fff}
+#wejhatna .project-actions .btn-primary{background:var(--d2);border-color:var(--d2);color:#fff}
 #idrm .project-actions .btn-primary{background:var(--d3);border-color:var(--d3);color:#fff}
 
 /* Mobile / tablet re-composition. */
@@ -1199,6 +1212,8 @@ html[lang="ar"] .recommendation-quote,html[lang="ar"] .recommendation-detail{fon
   .hero-name{white-space:normal}
 }
 @media (max-width:900px){
+  .sec-hero{min-height:auto}
+  .hero-monogram{width:56px;height:56px;margin-bottom:18px}
   .skill-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
   .skill-col:nth-child(2){border-inline-end:0}
   .skill-col:nth-child(n+3){border-top:1px solid var(--line)}
@@ -1219,8 +1234,11 @@ html[lang="ar"] .recommendation-quote,html[lang="ar"] .recommendation-detail{fon
   .nav-links a{min-height:44px;font-size:.82rem}
   .nav-tools{margin-inline-start:auto}
   .menu-btn{display:inline-grid}
-  .hero-inner{grid-template-columns:1fr;gap:42px;padding-block:calc(var(--nav-h) + 48px) 54px}
-  .hero-name{font-size:clamp(3.05rem,14.5vw,5.2rem);line-height:1;letter-spacing:-.045em}
+  .sec-hero{min-height:auto}
+  .hero-inner{grid-template-columns:1fr;gap:42px;padding-block:calc(var(--nav-h) + 28px) 54px}
+  .hero-monogram{width:52px;height:52px;margin-bottom:16px}
+  .hero-monogram .nav-monogram-front{inset:9px}
+  .hero-name{font-size:clamp(2.6rem,12vw,4.4rem);line-height:1;letter-spacing:-.045em}
   .hero-name .ln+.ln{padding-inline-start:1.15rem}
   html[lang="ar"] .hero-name{font-size:clamp(2.7rem,13vw,4.7rem);white-space:normal}
   .hero-tags{gap:0;display:grid;grid-template-columns:1fr}
