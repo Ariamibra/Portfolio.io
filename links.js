@@ -18,7 +18,7 @@
 const SITE_LINKS = {
 
   // ---- Personal ----
-    cv: "https://drive.google.com/file/d/1f95smnjGC8UwGH2mFh_GDYKVTdKDAQN6/view?usp=drivesdk",
+    cv: "https://docs.google.com/document/d/16uwwI4iPQY0u1Z8MxR6IwTbqNuscrVBr/edit?usp=drivesdk&ouid=110336632636032359270&rtpof=true&sd=true",
   linkedin: "https://linkedin.com/in/aryam-alsaidi",
   email: "ariam.gis@outlook.com",
   // GitHub profile: the GitHub contact row stays hidden until you set this (e.g. "https://github.com/your-username").
@@ -47,7 +47,7 @@ const SITE_LINKS = {
   wejhatna: {
     liveUrl: "https://wejhatna.onrender.com/",
     githubUrl: "https://github.com/norasaleh1/Wejhatna",
-    reportUrl: "https://drive.google.com/file/d/1QydCprCTVqgnM4L8RfpDY0I8zHkmxz6I/view?usp=drivesdk"
+    reportUrl: "https://drive.google.com/file/d/1sJY5zC95-GsuiG1kcKY47JlHkEzapDjB/view?usp=drivesdk"
   },
 
   // ---- Academic recommendations ----
