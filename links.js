@@ -18,7 +18,7 @@
 const SITE_LINKS = {
 
   // ---- Personal ----
-    cv: "https://docs.google.com/document/d/16uwwI4iPQY0u1Z8MxR6IwTbqNuscrVBr/edit?usp=drivesdk&ouid=110336632636032359270&rtpof=true&sd=true",
+    cv: "https://drive.google.com/file/d/1u_xSmP-A4JBI4SLCk8B0oaMYwSxB9j33/view?usp=drivesdk",
   linkedin: "https://linkedin.com/in/aryam-alsaidi",
   email: "ariam.gis@outlook.com",
   // GitHub profile: the GitHub contact row stays hidden until you set this (e.g. "https://github.com/your-username").
