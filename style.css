@@ -22,8 +22,7 @@
   --d1: #1B365D;
   --d2: #1E8A8F;
   --d3: #6E7A3C;
-.sec-idrm    { --sec-bg: var(--bg-idrm); }
-.sec-certs   { --sec-bg: var(--bg-cer
+
   /* derived, not new brand colours */
   --moss-ink: color-mix(in srgb, var(--moss) 45%, var(--midnight));   /* moss dark enough for small text */
   --night:    color-mix(in srgb, var(--midnight) 48%, #000);          /* the night version of Midnight Green */
@@ -197,7 +196,8 @@ html[lang="ar"] .hero-name { line-height: 1.1; font-weight: 300; }
 .sec-work-head { --sec-bg: var(--bg-workhead); }
 .sec-grad    { --sec-bg: var(--bg-grad); }
 .sec-wej     { --sec-bg: var(--bg-wej); }
-ts); }
+.sec-idrm    { --sec-bg: var(--bg-idrm); }
+.sec-certs   { --sec-bg: var(--bg-certs); }
 .sec-contact { --sec-bg: var(--bg-contact); }
 .sec, .site-nav, .site-footer { transition: background-color .4s ease, color .4s ease; }
 
@@ -897,10 +897,9 @@ html[data-theme=dark] .recommendation-rating strong{color:var(--beige)}
 .cert{border-bottom:1px solid var(--atlas-line);border-radius:0!important}
 .recommendation-card{border-radius:0!important;box-shadow:none!important}
 
-/* Footer */
-.site-footer{background:var(--midnight);color:var(--beige)}
-.footer-inner{display:flex;flex-wrap:wrap;gap:1.25rem 2rem;align-items:baseline}
-.footer-name{font-weight:600}
+/* Footer (layout only — colors come from the theme-aware .site-footer rule above) */
+.footer-inner{display:flex;flex-wrap:wrap;gap:1.25rem 2rem;align-items:baseline;color:var(--ink-2)}
+.footer-name{font-weight:600;color:var(--ink)}
 .footer-role{opacity:.82}
 .footer-focus{margin-inline-start:auto;opacity:.7;font-size:.78rem}
 
@@ -1006,7 +1005,6 @@ html[data-theme="dark"] .sec{border-top-color:color-mix(in srgb,var(--beige) 10%
 html[data-theme="dark"] .sec::before{opacity:.28}
 
 /* Keep only intentional motifs; hide the heavy generic wallpaper layers. */
-.sec-hero>.deco{display:none}
 .sec-about>.deco{opacity:.055}
 .sec-skills>.deco:first-child{opacity:.04}
 .sec-skills>.deco-tin{opacity:.12}
@@ -1071,6 +1069,7 @@ html[data-theme="dark"] .sec::before{opacity:.28}
 
 /* Monogram on smaller screens: same geometry, never a filled avatar. */
 @media (max-width:1199px){
+  .sec-hero{min-height:auto}
   .nav-monogram{position:relative;width:34px;height:34px;display:inline-block;flex:none}
   .nav-monogram-back,.nav-monogram-front{position:absolute;display:grid;place-items:center;background:transparent!important;border-radius:0}
   .nav-monogram-back{inset:0;border:1px solid var(--midnight)}
@@ -1282,135 +1281,3 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 .sec::before{animation:ambientDrift 22s ease-in-out infinite alternate}
 @media (prefers-reduced-motion:reduce){.sec::before{animation:none!important}}
-
-
-/* =====================================================================
-   FINAL POLISH — light/dark contrast, iPad landscape, IDRM surface,
-   hero ambient motion, and the AS identity mark.
-   Conservative overrides: preserve the existing editorial system.
-   ===================================================================== */
-
-/* Theme contrast: secondary copy stays readable without becoming heavy. */
-.sec, .site-nav { --ink-2: var(--p-ink-2); }
-html[data-theme="dark"] .sec, html[data-theme="dark"] .site-nav { --ink-2: var(--n-ink-2); }
-html[data-theme="light"] .hero-tags,
-html[data-theme="light"] .meta-line,
-html[data-theme="light"] .project-rail .role,
-html[data-theme="light"] .project-facts span,
-html[data-theme="light"] .recommendation-person p { color: color-mix(in srgb, var(--midnight) 82%, #000); }
-html[data-theme="dark"] .hero-tags,
-html[data-theme="dark"] .meta-line,
-html[data-theme="dark"] .project-rail .role,
-html[data-theme="dark"] .project-facts span,
-html[data-theme="dark"] .recommendation-person p { color: color-mix(in srgb, var(--beige) 82%, var(--night)); }
-
-/* Footer: the final name/focus line must never inherit a dark text token on the dark footer. */
-.site-footer { background: var(--midnight); color: var(--beige); }
-.site-footer .footer-inner,
-.site-footer .footer-name,
-.site-footer .footer-role { color: var(--beige); }
-.site-footer .footer-role { opacity: .82; }
-.site-footer .footer-focus { color: var(--beige); opacity: .72; }
-html[lang="ar"] .site-footer .footer-inner { text-align: start; }
-
-/* IDRM: give it the same quiet project-paper family as the projects above,
-   while retaining a restrained moss analytical accent. */
-.sec-idrm { --sec-bg: color-mix(in srgb, #fff 32%, var(--beige)); }
-html[data-theme="dark"] .sec-idrm { --sec-bg: color-mix(in srgb, var(--night) 84%, var(--midnight)); }
-.idrm-atlas { background: color-mix(in srgb, var(--beige) 18%, transparent); }
-html[data-theme="dark"] .idrm-atlas { background: color-mix(in srgb, var(--night) 22%, transparent); }
-.idrm-hero-row { border-bottom-color: var(--line-2); }
-.idrm-score-stamp { border-color: color-mix(in srgb, var(--moss) 55%, var(--line-2)); background: color-mix(in srgb, var(--moss) 7%, transparent); }
-.idrm-score-stamp strong, .idrm-score-stamp small { color: var(--d3); }
-html[data-theme="dark"] .idrm-score-stamp { background: color-mix(in srgb, var(--moss) 9%, transparent); }
-.relationship-panel { background: color-mix(in srgb, var(--beige) 12%, transparent); }
-html[data-theme="dark"] .relationship-panel { background: color-mix(in srgb, var(--beige) 4%, transparent); }
-
-/* Hero ambient cartographic motion: subtle illuminated circles + grid/crosshair texture.
-   Kept intentionally low-contrast so the typography remains the focal point. */
-.sec-hero > .deco { display: block; opacity: 1; }
-.sec-hero > .deco .g-fine { opacity: .48; }
-.sec-hero > .deco .g-major { opacity: .25; }
-.sec-hero > .deco .g-cross { opacity: .20; }
-.sec-hero > .deco .g-hl { opacity: .14; }
-.sec-hero::after {
-  content: "";
-  position: absolute;
-  width: min(34vw, 430px);
-  aspect-ratio: 1;
-  inset-inline-end: 8%;
-  inset-block-start: 12%;
-  border-radius: 50%;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--moss) 18%, transparent) 0 2%, transparent 3%),
-    radial-gradient(circle at 50% 50%, transparent 0 31%, color-mix(in srgb, var(--moss) 17%, transparent) 31.2% 31.5%, transparent 32%),
-    radial-gradient(circle at 50% 50%, transparent 0 55%, color-mix(in srgb, var(--midnight) 12%, transparent) 55.2% 55.5%, transparent 56%),
-    radial-gradient(circle at 50% 50%, transparent 0 75%, color-mix(in srgb, var(--rosy) 10%, transparent) 75.2% 75.5%, transparent 76%);
-  opacity: .72;
-  filter: blur(.1px);
-  transform-origin: 50% 50%;
-  animation: hero-orbit 22s ease-in-out infinite alternate;
-}
-.sec-hero > .deco::after {
-  content: "";
-  position: absolute;
-  width: min(18vw, 210px);
-  aspect-ratio: 1;
-  inset-inline-end: 23%;
-  inset-block-start: 30%;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--rosy) 13%, transparent), transparent 68%);
-  filter: blur(18px);
-  opacity: .5;
-  animation: hero-glow 12s ease-in-out infinite alternate;
-}
-@keyframes hero-orbit { from { transform: translate3d(0,0,0) scale(.96); opacity:.52; } to { transform: translate3d(-14px,10px,0) scale(1.035); opacity:.78; } }
-@keyframes hero-glow { from { transform: translate3d(8px,-4px,0); opacity:.28; } to { transform: translate3d(-12px,14px,0); opacity:.58; } }
-
-/* AS mark / avatar: cleaner layered geometry instead of a filled square. */
-.hero-monogram { position: relative; overflow: visible; }
-.hero-monogram .nav-monogram-back { background: transparent !important; border: 1px solid var(--midnight) !important; }
-.hero-monogram .nav-monogram-front { background: color-mix(in srgb, var(--moss) 13%, transparent) !important; border: 1px solid var(--moss) !important; color: var(--midnight) !important; }
-.hero-monogram::after { content:""; position:absolute; width:8px; height:8px; border-radius:50%; background:var(--rosy); inset-inline-end:-4px; inset-block-end:-4px; opacity:.78; }
-html[data-theme="dark"] .hero-monogram .nav-monogram-back { border-color: var(--beige) !important; }
-html[data-theme="dark"] .hero-monogram .nav-monogram-front { color: var(--beige) !important; background: color-mix(in srgb, var(--moss) 20%, transparent) !important; }
-
-/* iPad / tablet landscape: use the compact horizontal navigation,
-   but give the hero enough breathing room and prevent title collisions. */
-@media (min-width: 901px) and (max-width: 1199px) {
-  :root { --nav-h: 68px; --gutter: clamp(28px, 5vw, 54px); }
-  .site-nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg-nav) 94%, transparent); border-bottom: 1px solid var(--line); }
-  .nav-inner { min-height: var(--nav-h); }
-  .nav-brand { min-width: 0; }
-  .nav-identity-copy strong { white-space: nowrap; }
-  .nav-right { min-width: 0; }
-  .nav-links { gap: clamp(10px, 1.5vw, 22px); }
-  .nav-links a { white-space: nowrap; font-size: clamp(.72rem, 1.15vw, .84rem); }
-  .nav-cv { white-space: nowrap; }
-  .nav-tools { flex: none; }
-  .hero-inner { min-height: calc(100svh - var(--nav-h)); padding-block: 72px 70px; }
-  .hero-copy { max-width: 900px; }
-  .hero-name { font-size: clamp(4.5rem, 8.2vw, 7.6rem); letter-spacing: -.06em; }
-  .hero-role { margin-top: 1.8rem; }
-  .hero-intro { max-width: 56ch; }
-  .sec-hero::after { width: min(30vw, 330px); inset-inline-end: 6%; inset-block-start: 18%; }
-  .idrm-hero-row { grid-template-columns: minmax(0,1fr) 150px; }
-  .idrm-atlas .h3 { font-size: clamp(2.4rem, 5vw, 4.5rem); }
-  .recommendations-grid { gap: 22px; }
-}
-
-/* On narrow phones keep the same atmosphere, but reduce the ambient rings. */
-@media (max-width: 900px) {
-  .sec-hero::after { width: 250px; inset-inline-end: -70px; inset-block-start: 18%; opacity: .5; }
-  .sec-hero > .deco .g-fine { opacity: .32; }
-  .sec-hero > .deco .g-major { opacity: .18; }
-  .hero-monogram::after { width: 6px; height: 6px; }
-}
-@media (max-width: 560px) {
-  .sec-hero::after { width: 190px; inset-inline-end: -60px; inset-block-start: 15%; opacity: .42; }
-  .site-footer .footer-inner { gap: .55rem 1rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sec-hero::after, .sec-hero > .deco::after { animation: none !important; }
-}
