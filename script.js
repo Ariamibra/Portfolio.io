@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       input: form.elements[n],
       error: document.getElementById('cf-' + n + '-err')
     }));
-    const contactEmail = (typeof SITE_LINKS !== 'undefined' && SITE_LINKS.email) || 'ariam.gis@outlook.com';
+    const contactEmail = (typeof SITE_LINKS !== 'undefined' && SITE_LINKS.email) || 'aryam.gis@outlook.com';
     const T = {
       en: {
         name: 'Please enter your name.',
