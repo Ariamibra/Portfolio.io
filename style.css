@@ -1343,3 +1343,98 @@ html[data-theme="dark"] .nav-monogram-front{border-color:var(--moss)!important;c
 .growth-count{text-shadow:-1px -1px 0 var(--beige),1px -1px 0 var(--beige),-1px 1px 0 var(--beige),1px 1px 0 var(--beige)}
 html[data-theme="dark"] .growth-count{text-shadow:-1px -1px 0 var(--night),1px -1px 0 var(--night),-1px 1px 0 var(--night),1px 1px 0 var(--night)}
 .nav-monogram-front,.hero-monogram .nav-monogram-front{font-family:"DM Sans",sans-serif!important;font-weight:700!important;letter-spacing:.03em!important}
+
+/* Final corrections — precise, no structural redesign. */
+
+/* IDRM uses the same project-panel surface as the preceding project sections. */
+#idrm>.atlas-project{
+  background:color-mix(in srgb,#fff 38%,transparent);
+}
+html[data-theme="dark"] #idrm>.atlas-project{
+  background:color-mix(in srgb,var(--night) 72%,transparent);
+}
+
+/* Hero avatar / AS mark: one clean geometric frame, no overlapping boxes. */
+.hero-monogram{
+  position:relative!important;
+  width:74px!important;
+  height:74px!important;
+  display:grid!important;
+  place-items:center!important;
+  margin-bottom:26px!important;
+  border:1px solid var(--midnight)!important;
+  background:transparent!important;
+  animation:rise .9s var(--ease) both;
+  overflow:visible!important;
+}
+.hero-monogram::before,
+.hero-monogram::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+}
+.hero-monogram::before{
+  width:10px;
+  height:10px;
+  inset-inline-end:-1px;
+  inset-block-start:-1px;
+  border-inline-end:1px solid var(--moss);
+  border-block-start:1px solid var(--moss);
+}
+.hero-monogram::after{
+  width:1px;
+  height:18px;
+  inset-inline-start:50%;
+  inset-block-end:-9px;
+  background:var(--moss);
+  opacity:.7;
+}
+.hero-monogram .nav-monogram-back{
+  position:absolute!important;
+  inset:0!important;
+  width:auto!important;
+  height:auto!important;
+  border:0!important;
+  background:transparent!important;
+}
+.hero-monogram .nav-monogram-front{
+  position:relative!important;
+  inset:auto!important;
+  width:auto!important;
+  height:auto!important;
+  border:0!important;
+  background:transparent!important;
+  color:var(--midnight)!important;
+  font-family:"DM Sans",sans-serif!important;
+  font-weight:600!important;
+  font-size:1.35rem!important;
+  line-height:1!important;
+  letter-spacing:.14em!important;
+  padding-inline-start:.14em;
+}
+html[data-theme="dark"] .hero-monogram{border-color:var(--beige)!important}
+html[data-theme="dark"] .hero-monogram .nav-monogram-front{color:var(--beige)!important}
+
+@media (max-width:900px){
+  .hero-monogram{width:60px!important;height:60px!important;margin-bottom:20px!important}
+  .hero-monogram .nav-monogram-front{font-size:1.12rem!important}
+}
+@media (max-width:680px){
+  .hero-monogram{width:56px!important;height:56px!important;margin-bottom:18px!important}
+  .hero-monogram .nav-monogram-front{font-size:1.02rem!important}
+}
+
+/* Professional Development: tighter and more orderly while keeping the existing ledger layout. */
+.certs-layout{gap:clamp(24px,5vw,64px)}
+.certs-head .h2{margin-bottom:.25rem}
+.certs-head .sec-sub{margin-top:.7rem;max-width:30ch}
+.cert-groups{gap:clamp(14px,2vw,24px)!important}
+.cert-group{padding-block:.72rem!important}
+.cert-cat{font-size:.78rem!important;margin-bottom:.25rem!important;padding-bottom:.42rem!important}
+.cert{min-height:0!important;padding:.58rem 0!important;gap:.85rem!important}
+.cert-title{font-size:.9rem!important;line-height:1.3!important}
+.cert-issuer{font-size:.72rem!important;margin-top:.05rem!important}
+.cert-link{font-size:.72rem!important;padding:.25rem 0!important}
+.cert-link .i{width:12px;height:12px}
+
+/* Contact: explicit canonical email in the rendered page and mail action. */
